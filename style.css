@@ -1,0 +1,69 @@
+#memoryBoard{
+    background:#33ccff;
+    border:#00ace6 1px solid;
+    width:535px;
+    height:275px;
+    padding:24px;
+    margin:0px auto;
+}
+#memoryBoard > div{
+    background:url("background.jpg") no-repeat;
+    border:#000 1px solid;
+    width:71px;
+    height:71px;
+    float:left;
+    margin:10px;
+    padding:20px;
+    font-size:64px;
+    font-family:monospace;
+    cursor:url("cursor.png"), pointer;
+    text-align:center;
+}
+#counter{
+    text-align:center;
+    font-size:64px;
+    font-family:monospace;
+}
+#winDialogOverlay{
+	display: none;
+	opacity: .8;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	background: #464646;
+	width: 100%;
+	z-index: 10;
+}
+#winDialogBox{
+	display: none;
+	position: fixed;
+	background: #000;
+	border-radius:7px; 
+	width:550px;
+	z-index: 10;
+}
+#winDialogBox > div{
+    font-family:monospace;
+    margin:8px;
+}
+#winDialogHead{
+    background-color:#666;
+    font-size:64px;
+    padding:10px;
+    color:#CCC;
+    font-family:monospace;
+}
+#winDialogBody{
+    font-size:64px;
+    background-color:#333;
+    padding:20px;
+    color:#FFF;
+    font-family:monospace;
+}
+#winDialogFooter{
+    font-size:64px;
+    background-color:#666;
+    padding:10px;
+    text-align:right;
+    font-family:monospace;
+}
