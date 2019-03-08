@@ -1,0 +1,108 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="assets/style.css"/>
+<script>
+    function winAlert(){
+        this.render = function(winDialog){
+            var winW = window.innerWidth;
+            var winH = window.innerHeight;
+            var winDialogOverlay = document.getElementById('winDialogOverlay');
+            var winDialogBox = document.getElementById('winDialogBox');
+            winDialogOverlay.style.display ="block";
+            winDialogOverlay.style.height =winH+"px";
+            winDialogBox.style.left = (winW/2) - (550 * 0.5) + "px";
+            winDialogBox.style.top = "100px";
+            winDialogBox.style.display = "block";
+            document.getElementById('winDialogHead').innerHTML = "好！";
+            document.getElementById('winDialogBody').innerHTML = winDialog;
+            document.getElementById('winDialogFooter').innerHTML = '<button onclick="winAlert.ok()">好！</button>';
+        };
+        this.ok = function(){
+            document.getElementById('winDialogOverlay').style.display ="none";
+            document.getElementById('winDialogBox').style.display ="none";
+        };
+    }
+    var winAlert = new winAlert();
+    var counter = 0;
+    var matchAudio = new Audio('assets/good.mp3');
+    var memoryArray = ['鸭','鸭','叉','叉','火','火','骨','骨'];//the tiles
+    var memoryValues = [];//restore memory values
+    var memoryTileIds = [];//store memoey tile ids
+    var tilesFlipped = 0; //how many tiles are flipped
+    Array.prototype.memoryShuffle = function(){
+        var i = this.length, j, temp;
+        while (--i>0){
+            j = Math.floor(Math.random() * (i+1));
+            temp = this[j];
+            this[j] = this[i];
+            this[i] = temp;
+        }
+    };
+    function newBoard(){
+        tilesFlipped = 0;//reset
+        var output = '';//output variable
+        memoryArray.memoryShuffle();//apply shuffle
+        for(var i = 0; i <memoryArray.length; i++){//go over all cards
+            output += '<div id="tile'+i+'" onclick="memoryFlipTile(this,\''+memoryArray[i]+'\')"></div>';
+        }
+        document.getElementById('memoryBoard').innerHTML = output;
+    }
+    function memoryFlipTile(tile,val){
+        if(tile.innerHTML == "" && memoryValues.length < 2){//check if tile is empty and if memoryValues is less than two then run EVERYTHING
+            tile.style.background = '#FFF';//change background
+            tile.innerHTML = val;//insert val into tile
+            if(memoryValues.length == 0){//evaluate length
+                memoryValues.push(val);//insert val into tile
+                memoryTileIds.push(tile.id);//id of clicked tile
+                document.getElementById("counter").innerHTML = "Attempts: " + counter;
+            } else if(memoryValues.length == 1){//clicking second card
+                memoryValues.push(val);//insert val into tile
+                memoryTileIds.push(tile.id);//id of clicked tile
+                counter+=1;
+                document.getElementById("counter").innerHTML = "Attempts: " + counter;
+                if(memoryValues[0] == memoryValues[1]){//see if matched
+                    matchAudio.play();
+                    setTimeout(tilesFlipped += 2, 700);//add match to counter
+                    memoryValues = [];
+                    memoryTileIds = [];//clear arrays
+                    if(tilesFlipped == memoryArray.length){//check if board is cleared
+                        setTimeout(winAlert.render("好！"), 700);//win text
+                        document.getElementById('memoryBoard').innerHTML = "";//reset board
+                        newBoard();//recreate board
+                        counter = 0;
+                        document.getElementById("counter").innerHTML = "Attempts: 0";
+                    }    
+                } else {
+                    function flipBack(){//flip the failed attempt back
+                        var tile1 = document.getElementById(memoryTileIds[0]);
+                        var tile2 = document.getElementById(memoryTileIds[1]);
+                        tile1.innerHTML = "";//reset tiles
+                        tile1.style.background = 'url("assets/images/background.jpg") no-repeat';//reset background
+                        tile2.innerHTML = "";//reset tiles
+                        tile2.style.background = 'url("assets/images/background.jpg") no-repeat';//reset background
+                        memoryValues = [];
+                        memoryTileIds = [];//clear arrays
+                    }
+                    setTimeout(flipBack, 700);
+                }
+            }
+        }
+    }
+</script>
+</head>
+<body>
+    <div id="memoryBoard">
+        <script>newBoard();</script>
+    </div>
+    <p id="counter">Attempts: 0</p>
+    <div id="winDialogOverlay">
+        <div id="winDialogBox">
+            <div id="winDialogHead"></div>
+            <div id="winDialogBody"></div>
+            <div id="winDialogFooter"></div>
+        </div>
+    </div>
+</body>
+</html>

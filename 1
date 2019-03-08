@@ -2,7 +2,7 @@
 
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="Style.css"/>
+    <link rel="stylesheet" href="assets/style.css"/>
 <script>
     function winAlert(){
         this.render = function(winDialog){
@@ -26,7 +26,7 @@
     }
     var winAlert = new winAlert();
     var counter = 0;
-    var matchAudio = new Audio('good.mp3');
+    var matchAudio = new Audio('assets/good.mp3');
     var memoryArray = ['鸭','鸭','叉','叉','火','火','骨','骨'];//the tiles
     var memoryValues = [];//restore memory values
     var memoryTileIds = [];//store memoey tile ids
@@ -79,9 +79,9 @@
                         var tile1 = document.getElementById(memoryTileIds[0]);
                         var tile2 = document.getElementById(memoryTileIds[1]);
                         tile1.innerHTML = "";//reset tiles
-                        tile1.style.background = 'url("background.jpg") no-repeat';//reset background
+                        tile1.style.background = 'url("assets/images/background.jpg") no-repeat';//reset background
                         tile2.innerHTML = "";//reset tiles
-                        tile2.style.background = 'url("background.jpg") no-repeat';//reset background
+                        tile2.style.background = 'url("assets/images/background.jpg") no-repeat';//reset background
                         memoryValues = [];
                         memoryTileIds = [];//clear arrays
                     }

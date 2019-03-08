@@ -1,2 +1,3 @@
 # TK-Game
-The TK game game from project-gallery.000webhostapp.com/TKgame/TKgame.html
+Created 29/12/2016 as a modification of a memory game
+More localised to Singapore foods
